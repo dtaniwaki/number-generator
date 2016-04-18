@@ -14,7 +14,7 @@ trait AppBase extends App with StrictLogging {
   protected val numbers = factory.getNumbers()
   protected val storage = factory.getStorage()
   protected val observers = factory.getObservers(storage)
-  protected val requestHandler = new RequestHandler(storage)
+  protected val requestHandler = factory.getHandler(storage)
   protected val processor = new Processor(numbers, observers)
 
   private val port = config.as[Option[Int]]("app.port").getOrElse(DefaultPort)
