@@ -20,6 +20,7 @@ class External(host: String, port: Int) extends Base with DefaultJsonProtocol wi
       try {
         socket.connect(new InetSocketAddress(InetAddress.getByName(host), port), 10)
         val body = new BufferedSource(socket.getInputStream()).getLines().mkString
+        logger.debug(s"Retrieve: ${body}")
         body.parseJson.convertTo[Map[String, Int]]
       } finally {
         socket.close()

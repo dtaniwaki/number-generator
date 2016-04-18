@@ -8,7 +8,7 @@ import com.typesafe.scalalogging.StrictLogging
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class Server(port: Int, handler: RequestHandler) extends Runnable with StrictLogging {
+class Server(port: Int, handler: Handler.Base) extends Runnable with StrictLogging {
   val server = new ServerSocket(port)
   logger.info(s"Waiting for requests on ${port}")
 
@@ -24,7 +24,7 @@ class Server(port: Int, handler: RequestHandler) extends Runnable with StrictLog
 }
 
 object Server {
-  def run(port: Int, handler: RequestHandler): Future[Unit] = {
+  def run(port: Int, handler: Handler.Base): Future[Unit] = {
     Future {
       new Server(port, handler).run()
     }
